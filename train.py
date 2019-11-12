@@ -28,12 +28,13 @@ flags.DEFINE_enum('mode', 'fit', ['fit', 'eager_fit', 'eager_tf'],
                   'eager_fit: model.fit(run_eagerly=True), '
                   'eager_tf: custom GradientTape')
 flags.DEFINE_enum('transfer', 'none',
-                  ['none', 'darknet', 'no_output', 'frozen', 'fine_tune'],
+                  ['none', 'darknet', 'no_output', 'frozen', 'fine_tune', 'full_fine_tune'],
                   'none: Training from scratch, '
                   'darknet: Transfer darknet, '
                   'no_output: Transfer all but output, '
                   'frozen: Transfer and freeze all, '
-                  'fine_tune: Transfer all and freeze darknet only')
+                  'fine_tune: Transfer all and freeze darknet only, '
+                  'full_fine_tune: full')
 flags.DEFINE_integer('size', 416, 'image size')
 flags.DEFINE_integer('epochs', 2, 'number of epochs')
 flags.DEFINE_integer('batch_size', 8, 'batch size')
@@ -74,6 +75,9 @@ def main(_argv):
         dataset.transform_targets(y, anchors, anchor_masks, 80)))
 
     if FLAGS.transfer != 'none':
+        for l in model.layers:
+            if l.name.startswith('yolo_output') or l.name.startswith('yolo_boxes') or l.name == 'yolo_nms':
+                l.name = 'new_' + l.name 
         model.load_weights(FLAGS.weights, by_name=True)
         if FLAGS.transfer == 'fine_tune':
             # freeze darknet
@@ -82,6 +86,8 @@ def main(_argv):
         elif FLAGS.mode == 'frozen':
             # freeze everything
             freeze_all(model)
+        elif FLAGS.mode == 'full_fine_tune':
+            pass
         else:
             # reset top layers
             if FLAGS.tiny:  # get initial weights
