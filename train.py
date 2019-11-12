@@ -77,6 +77,7 @@ def main(_argv):
     if FLAGS.transfer != 'none':
         for l in model.layers:
             if l.name.startswith('yolo_output') or l.name.startswith('yolo_boxes') or l.name == 'yolo_nms':
+                print(l.name)
                 l.name = 'new_' + l.name 
         model.load_weights(FLAGS.weights, by_name=True)
         if FLAGS.transfer == 'fine_tune':
