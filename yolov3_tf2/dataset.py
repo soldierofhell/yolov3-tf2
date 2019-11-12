@@ -111,10 +111,10 @@ def parse_tfrecord(tfrecord, class_table):
                         tf.sparse.to_dense(x['image/object/bbox/ymax']),
                         labels], axis=1)
     
-    print(labels)
-    print(y_train)
+    print(tf.shape(labels))
+    print(tf.shape(y_train))
 
-    paddings = [[0, 100 - tf.shape(y_train)[0]], [0, 0]]
+    paddings = [[0, 200 - tf.shape(y_train)[0]], [0, 0]]
     y_train = tf.pad(y_train, paddings)
 
     return x_train, y_train
