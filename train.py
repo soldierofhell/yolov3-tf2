@@ -74,7 +74,7 @@ def main(_argv):
         dataset.transform_targets(y, anchors, anchor_masks, 80)))
 
     if FLAGS.transfer != 'none':
-        model.load_weights(FLAGS.weights)
+        model.load_weights(FLAGS.weights, by_name=True)
         if FLAGS.transfer == 'fine_tune':
             # freeze darknet
             darknet = model.get_layer('yolo_darknet')
