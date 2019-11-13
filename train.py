@@ -76,15 +76,9 @@ def main(_argv):
 
     if FLAGS.transfer != 'none':
         for l in model.layers:
-            print(l.name)
             if l.name.startswith('yolo_output'):
                 l._name = 'new_' + l.name
-                print(l.name, 'NEW')
-                for l2 in l.layers:
-                    #l2._name = 'new_' + l2.name
-                    print(l2.name, 'NEW')
         model.load_weights(FLAGS.weights, by_name=True)
-        print('wczytane..')
         if FLAGS.transfer == 'fine_tune':
             # freeze darknet
             darknet = model.get_layer('yolo_darknet')
