@@ -206,13 +206,13 @@ def YoloV3(size=None, channels=3, anchors=yolo_anchors,
     x_36, x_61, x = Darknet(name='yolo_darknet')(x)
 
     x = YoloConv(512, name='yolo_conv_0')(x)
-    output_0 = YoloOutput(512, len(masks[0]), classes, name='yolo_output_0')(x)
+    output_0 = YoloOutput(512, len(masks[0]), classes, name='new_yolo_output_0')(x)
 
     x = YoloConv(256, name='yolo_conv_1')((x, x_61))
-    output_1 = YoloOutput(256, len(masks[1]), classes, name='yolo_output_1')(x)
+    output_1 = YoloOutput(256, len(masks[1]), classes, name='new_yolo_output_1')(x)
 
     x = YoloConv(128, name='yolo_conv_2')((x, x_36))
-    output_2 = YoloOutput(128, len(masks[2]), classes, name='yolo_output_2')(x)
+    output_2 = YoloOutput(128, len(masks[2]), classes, name='new_yolo_output_2')(x)
 
     if training:
         return Model(inputs, (output_0, output_1, output_2), name='yolov3')
