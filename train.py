@@ -80,6 +80,9 @@ def main(_argv):
             if l.name.startswith('yolo_output') or l.name.startswith('yolo_boxes') or l.name == 'yolo_nms':
                 l._name = 'new_' + l.name
                 print(l.name, 'NEW')
+                for l2 in l.layers:
+                    l2._name = 'new_' + l2.name
+                    print(l2.name, 'NEW')
         model.load_weights(FLAGS.weights, by_name=True)
         if FLAGS.transfer == 'fine_tune':
             # freeze darknet
