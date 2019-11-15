@@ -181,7 +181,8 @@ def main(_argv):
         history = model.fit(train_dataset,
                             epochs=FLAGS.epochs,
                             callbacks=callbacks,
-                            validation_data=val_dataset)
+                            #validation_data=val_dataset
+                           )
 
 
 if __name__ == '__main__':
