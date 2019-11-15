@@ -24,6 +24,8 @@ def main(_argv):
     img = np.random.random((1, 320, 320, 3)).astype(np.float32)
     output = yolo(img)
     logging.info('sanity check passed')
+    
+    print(FLAGS.output)
 
     yolo.save_weights(FLAGS.output, save_format='h5')
     logging.info('weights saved')
