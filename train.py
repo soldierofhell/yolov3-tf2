@@ -7,7 +7,7 @@ from tensorflow.keras.callbacks import (
     ReduceLROnPlateau,
     EarlyStopping,
     ModelCheckpoint,
-    #TensorBoard
+    TensorBoard
 )
 from yolov3_tf2.models import (
     YoloV3, YoloV3Tiny, YoloLoss,
@@ -175,7 +175,7 @@ def main(_argv):
             EarlyStopping(patience=10, verbose=1),
             ModelCheckpoint('checkpoints/yolov3_train_{epoch}.tf',
                             verbose=1, save_weights_only=True),
-            TensorBoard(log_dir='logs')
+            #TensorBoard(log_dir='logs')
         ]
 
         history = model.fit(train_dataset,
