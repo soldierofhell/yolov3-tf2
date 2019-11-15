@@ -180,7 +180,7 @@ def main(_argv):
 
         history = model.fit(train_dataset,
                             epochs=FLAGS.epochs,
-                            callbacks=callbacks,
+                            #callbacks=callbacks,
                             #validation_data=val_dataset
                            )
 
