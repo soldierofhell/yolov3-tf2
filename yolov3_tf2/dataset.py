@@ -114,7 +114,7 @@ def parse_tfrecord(tfrecord, class_table):
     max_objects = tf.constant(100)
     
     paddings = [[0, max_objects - tf.shape(y_train)[0]], [0, 0]]
-    y_train = tf.cond(tf.shape(y_train)[0]>v, lambda: tf.slice(y_train, [0,0], [max_objects,-1]), lambda: tf.pad(y_train, paddings))
+    y_train = tf.cond(tf.shape(y_train)[0]>max_objects, lambda: tf.slice(y_train, [0,0], [max_objects,-1]), lambda: tf.pad(y_train, paddings))
 
     return x_train, y_train
 
