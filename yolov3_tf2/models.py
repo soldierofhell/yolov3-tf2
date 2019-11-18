@@ -311,11 +311,11 @@ def YoloLoss(anchors, classes=80, ignore_thresh=0.5, loss_type=None):
 
         if loss_type == "xy":
             return xy_loss
-        else if loss_type == "wh":
+        elif loss_type == "wh":
             return wh_loss
-        else if loss_type == "obj":
+        elif loss_type == "obj":
             return obj_loss
-        else if loss_type == "class":
+        elif loss_type == "class":
             return class_loss            
             
         else:    
