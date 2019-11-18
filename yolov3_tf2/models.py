@@ -309,7 +309,7 @@ def YoloLoss(anchors, classes=80, ignore_thresh=0.5, loss_type=None):
         obj_loss = tf.reduce_sum(obj_loss, axis=(1, 2, 3))
         class_loss = tf.reduce_sum(class_loss, axis=(1, 2, 3))
 
-        if loss_type == "xy:
+        if loss_type == "xy":
             return xy_loss
         else if loss_type == "wh":
             return wh_loss
