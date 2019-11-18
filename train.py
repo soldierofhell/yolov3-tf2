@@ -116,7 +116,8 @@ def main(_argv):
                         freeze_all(l)
 
     optimizer = tf.keras.optimizers.Adam(lr=FLAGS.learning_rate)
-    loss = [YoloLoss(anchors[mask], classes=FLAGS.num_classes)
+    loss = []
+    [loss.extend(YoloLoss(anchors[mask], classes=FLAGS.num_classes))
             for mask in anchor_masks]
 
     if FLAGS.mode == 'eager_tf':
