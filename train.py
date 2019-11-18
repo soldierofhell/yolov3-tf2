@@ -116,9 +116,9 @@ def main(_argv):
                         freeze_all(l)
 
     optimizer = tf.keras.optimizers.Adam(lr=FLAGS.learning_rate)
-    loss = []
-    for mask in anchor_masks:
-        loss.extend(YoloLoss(anchors[mask], classes=FLAGS.num_classes))
+    loss_types = ["xy", "wh", "object", "class"]
+    
+    loss = [YoloLoss(anchors[mask], classes=FLAGS.num_classes, loss_type=loss_type) for loss_type in loss_types for mask in anchor_masks]
 
     if FLAGS.mode == 'eager_tf':
         # Eager mode is great for debugging
