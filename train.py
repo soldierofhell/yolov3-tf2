@@ -119,7 +119,12 @@ def main(_argv):
     loss_types = ["xy", "wh", "object", "class"]
     
     # for loss_type in loss_types
-    loss_metrics = [YoloLoss(anchors[mask], classes=FLAGS.num_classes, loss_type='xy')  for mask in anchor_masks]
+    #loss_metrics = [YoloLoss(anchors[mask], classes=FLAGS.num_classes, loss_type='xy')  for mask in anchor_masks]
+    
+    xy_0 = YoloLoss(anchors[0], classes=FLAGS.num_classes, loss_type='xy')
+    xy_1 = YoloLoss(anchors[1], classes=FLAGS.num_classes, loss_type='xy') 
+    xy_2 = YoloLoss(anchors[2], classes=FLAGS.num_classes, loss_type='xy') 
+    
     loss = [YoloLoss(anchors[mask], classes=FLAGS.num_classes) for mask in anchor_masks]
 
     if FLAGS.mode == 'eager_tf':
@@ -170,7 +175,7 @@ def main(_argv):
             model.save_weights(
                 'checkpoints/yolov3_train_{}.tf'.format(epoch))
     else:
-        model.compile(optimizer=optimizer, loss=loss, metrics=['loss_metrics'],
+        model.compile(optimizer=optimizer, loss=loss, metrics=['xy_0', 'xy_1', 'xy_2'],
                       run_eagerly=(FLAGS.mode == 'eager_fit'))
 
         callbacks = [
