@@ -191,6 +191,7 @@ def main(_argv):
             EarlyStopping(patience=10, verbose=1),
             ModelCheckpoint('checkpoints/yolov3_train_{epoch}.tf',
                             verbose=1,
+                            monitor='loss',
                             save_best_only=FLAGS.save_best_only,
                             save_weights_only=FLAGS.save_weights_only,),
             TensorBoard(log_dir='logs',
