@@ -194,6 +194,7 @@ def main(_argv):
                             monitor='loss',
                             save_best_only=False, #FLAGS.save_best_only,
                             save_weights_only=False, #FLAGS.save_weights_only,),
+                           ),
             TensorBoard(log_dir='logs',
                         histogram_freq=FLAGS.histogram_freq,
                        write_images=FLAGS.write_images,)
