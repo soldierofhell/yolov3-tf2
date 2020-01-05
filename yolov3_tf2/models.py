@@ -319,6 +319,6 @@ def YoloLoss(anchors, classes=80, ignore_thresh=0.5, loss_type=None):
             return class_loss            
             
         else:    
-            return tf.add(xy_loss, wh_loss, obj_loss, class_loss)
+            return tf.add(tf.add(tf.add(xy_loss, wh_loss), obj_loss), class_loss)
     
     return yolo_loss
