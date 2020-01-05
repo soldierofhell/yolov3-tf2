@@ -189,11 +189,11 @@ def main(_argv):
         callbacks = [
             ReduceLROnPlateau(verbose=1),
             EarlyStopping(patience=10, verbose=1),
-            ModelCheckpoint('checkpoints/yolov3_train_{epoch}.tf',
+            ModelCheckpoint('checkpoints/yolov3_train_{epoch}', #.tf',
                             verbose=1,
                             monitor='loss',
-                            save_best_only=FLAGS.save_best_only,
-                            save_weights_only=FLAGS.save_weights_only,),
+                            save_best_only=False, #FLAGS.save_best_only,
+                            save_weights_only=False, #FLAGS.save_weights_only,),
             TensorBoard(log_dir='logs',
                         histogram_freq=FLAGS.histogram_freq,
                        write_images=FLAGS.write_images,)
