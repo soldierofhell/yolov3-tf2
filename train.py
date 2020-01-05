@@ -41,6 +41,14 @@ flags.DEFINE_integer('batch_size', 8, 'batch size')
 flags.DEFINE_float('learning_rate', 1e-3, 'learning rate')
 flags.DEFINE_integer('num_classes', 80, 'number of classes in the model')
 
+# ModelCheckpoint
+flags.DEFINE_boolean('save_best_only', False, 'save best model (True)')
+flags.DEFINE_boolean('save_weights_only', True, 'save model (True) or only weights (False)')
+
+# TensorBoard
+flags.DEFINE_integer('histogram_freq', 0, 'frequency (in epochs) at which to compute activation and weight histograms for the layers of the model')
+flags.DEFINE_boolean('write_images', False, 'whether to write model weights to visualize as image in TensorBoard')
+
 
 def main(_argv):
     if FLAGS.tiny:
@@ -182,8 +190,12 @@ def main(_argv):
             ReduceLROnPlateau(verbose=1),
             EarlyStopping(patience=10, verbose=1),
             ModelCheckpoint('checkpoints/yolov3_train_{epoch}.tf',
-                            verbose=1, save_weights_only=True),
-            #TensorBoard(log_dir='logs')
+                            verbose=1,
+                            save_best_only=FLAGS.save_best_only,
+                            save_weights_only=FLAGS.save_weights_only,),
+            TensorBoard(log_dir='logs',
+                        histogram_freq=FLAGS.histogram_freq,
+                       write_images=FLAGS.write_images,)
         ]
 
         history = model.fit(train_dataset,
