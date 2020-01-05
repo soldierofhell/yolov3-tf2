@@ -175,7 +175,7 @@ def main(_argv):
             model.save_weights(
                 'checkpoints/yolov3_train_{}.tf'.format(epoch))
     else:
-        model.compile(optimizer=optimizer, loss=loss, metrics=['xy_0', 'xy_1', 'xy_2'],
+        model.compile(optimizer=optimizer, loss=loss, # , metrics=['xy_0', 'xy_1', 'xy_2']
                       run_eagerly=(FLAGS.mode == 'eager_fit'))
 
         callbacks = [
